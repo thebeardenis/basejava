@@ -12,9 +12,9 @@ public class ArrayStorage {
         size = 0;
     }
 
-    void save(Resume r) throws ArrayIndexOutOfBoundsException {
+    void save(Resume resume) throws ArrayIndexOutOfBoundsException {
         try {
-            storage[size++] = r;
+            storage[size++] = resume;
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println(e.getMessage());
         }
