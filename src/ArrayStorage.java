@@ -2,21 +2,20 @@
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    Resume[] storage = new Resume[10000];
+    private final int ARRAY_LENGTH = 10000;
+    Resume[] storage = new Resume[ARRAY_LENGTH];
     private int size;
 
     void clear() {
-        for (Resume resume : storage) {
-            resume = null;
+        for (int i = 0; i < size; i++) {
+            storage[i] = null;
         }
         size = 0;
     }
 
-    void save(Resume r) throws ArrayIndexOutOfBoundsException {
-        try {
+    void save(Resume r) {
+        if (size < ARRAY_LENGTH) {
             storage[size++] = r;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println(e.getMessage());
         }
     }
 
@@ -30,14 +29,10 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-        for (int i = 0; i <= size; i++) {
+        for (int i = 0; i < size; i++) {
             if (storage[i].uuid.equals(uuid)) {
-                if (i == size) {
-                    storage[i] = null;
-                } else {
-                    storage[i] = storage[size - 1];
-                    storage[size - 1] = null;
-                }
+                storage[i] = storage[size - 1];
+                storage[size - 1] = null;
                 size--;
                 break;
             }
