@@ -6,20 +6,24 @@ public class ArrayStorage {
     private int size;
 
     void clear() {
-        for (Resume element : storage) {
-            element = null;
+        for (Resume resume : storage) {
+            resume = null;
         }
         size = 0;
     }
 
-    void save(Resume r) {
-        storage[size++] = r;
+    void save(Resume r) throws ArrayIndexOutOfBoundsException {
+        try {
+            storage[size++] = r;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     Resume get(String uuid) {
-        for (Resume str : storage) {
-            if (str != null && str.uuid.equals(uuid)) {
-                return str;
+        for (Resume resume : storage) {
+            if (resume != null && resume.uuid.equals(uuid)) {
+                return resume;
             }
         }
         return null;
