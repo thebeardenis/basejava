@@ -18,15 +18,10 @@ public class ArrayStorage {
         return -1;
     }
 
-    public boolean inStorage(String uuid) {
-
-        return getIndex(uuid) != -1;
-    }
-
     public void update(Resume r) {
         int index = getIndex(r.getUuid());
-        if (inStorage(r.getUuid()) && index != -1) {
-            storage[index].setUuid("This resume is update.");
+        if (index != -1) {
+            storage[index] = r;
         } else {
             System.out.println("Don't have " + r.getUuid() + " in storage.");
         }
@@ -38,13 +33,13 @@ public class ArrayStorage {
             return storage[index];
         } else {
             System.out.println("Don't have " + uuid + " in storage.");
+            return null;
         }
-        return null;
     }
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
-        if (inStorage(uuid) && index != -1) {
+        if (index != -1) {
             storage[index] = storage[size-1];
             storage[size-1] = null;
             size--;
@@ -61,12 +56,14 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        if (!inStorage(r.getUuid())) {
+        if (getIndex(r.getUuid()) == -1) {
             if (size < ARRAY_LENGTH) {
                 storage[size++] = r;
+            }else {
+                System.out.println("Storage is overflow.");
             }
         } else {
-            System.out.println("Don't have " + r.getUuid() + " in storage.");
+            System.out.println("Storage is overflow");
         }
     }
 
