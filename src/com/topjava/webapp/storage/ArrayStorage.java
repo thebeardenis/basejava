@@ -4,8 +4,8 @@ import com.topjava.webapp.model.Resume;
 
 import java.util.Arrays;
 
-public class ArrayStorage {
-    private final int ARRAY_LENGTH = 10000;
+public class ArrayStorage implements Storage{
+    private static final int ARRAY_LENGTH = 10000;
     private final Resume[] storage = new Resume[ARRAY_LENGTH];
     private int size;
 
