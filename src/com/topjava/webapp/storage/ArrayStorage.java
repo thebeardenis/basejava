@@ -63,7 +63,7 @@ public class ArrayStorage {
                 System.out.println("Storage is overflow.");
             }
         } else {
-            System.out.println("Storage is overflow");
+            System.out.println("Resume "+r.getUuid()+" already in storage.");
         }
     }
 
