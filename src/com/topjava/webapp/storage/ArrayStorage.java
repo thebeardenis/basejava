@@ -4,12 +4,12 @@ import com.topjava.webapp.model.Resume;
 
 import java.util.Arrays;
 
-public class ArrayStorage implements Storage{
-    private static final int ARRAY_LENGTH = 10000;
+public class ArrayStorage extends AbstractArrayStorage{
+    private static final int ARRAY_LENGTH = 100000;
     private final Resume[] storage = new Resume[ARRAY_LENGTH];
     private int size;
 
-    private int getIndex(String uuid) {
+    protected int getIndex(String uuid) {
         for (int index = 0; index < size; index++) {
             if (uuid.equals(storage[index].getUuid())) {
                 return index;
@@ -24,16 +24,6 @@ public class ArrayStorage implements Storage{
             storage[index] = r;
         } else {
             System.out.println("Don't have " + r.getUuid() + " in storage.");
-        }
-    }
-
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index != -1) {
-            return storage[index];
-        } else {
-            System.out.println("Don't have " + uuid + " in storage.");
-            return null;
         }
     }
 
@@ -70,7 +60,4 @@ public class ArrayStorage implements Storage{
         return Arrays.copyOfRange(storage, 0, size);
     }
 
-    public int size() {
-        return size;
-    }
 }
