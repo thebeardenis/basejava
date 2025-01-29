@@ -8,9 +8,10 @@ public class ArrayStorage extends AbstractArrayStorage {
     protected void fillDeleteElement(int index) {
         storage[index] = storage[size - 1];
     }
+
     @Override
     protected void insertElement(Resume r, int index) {
-        storage[index] = r;
+        storage[size] = r;
     }
 
     protected int getIndex(String uuid) {
