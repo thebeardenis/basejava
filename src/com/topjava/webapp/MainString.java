@@ -1,4 +1,4 @@
-package com.topjava.webapp.storage;
+package com.topjava.webapp;
 
 public class MainString {
     public static void main(String[] args) {
