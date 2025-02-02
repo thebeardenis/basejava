@@ -3,8 +3,18 @@ package com.topjava.webapp.storage;
 import com.topjava.webapp.model.Resume;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
+/*
+    private static class ResumeComparator implements Comparator<Resume> {
+        @Override
+        public int compare(Resume resume, Resume t1) {
+            return resume.getUuid().compareTo(t1.getUuid());
+        }
+    }
+ */
+    private static final Comparator<Resume> RESUME_COMPARATOR = Comparator.comparing(Resume::getFullName);
 
     @Override
     protected void fillDeleteElement(int index) {
@@ -21,9 +31,8 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         storage[binaryIndex] = r;
     }
 
-    protected Integer getSearchKey(String uuid) {
-        Resume searchKey = new Resume(uuid);
-        return Arrays.binarySearch(storage, 0, size, searchKey);
+    protected Integer getSearchKey(String fullName) {
+        Resume searchKey = new Resume(fullName);
+        return Arrays.binarySearch(storage, 0, size, searchKey,RESUME_COMPARATOR);
     }
-
 }
