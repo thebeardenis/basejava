@@ -47,7 +47,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File>{
             file.createNewFile();
             doWrite(r, file);
         } catch (IOException e) {
-            throw new StorageException("Culdn't create file"+file.getAbsolutePath(), file.getName(), e);
+            throw new StorageException("Couldn't create new file "+file.getAbsolutePath(), file.getName(), e);
         }
         doUpdate(r, file);
     }
@@ -88,8 +88,8 @@ public abstract class AbstractFileStorage extends AbstractStorage<File>{
     public void clear() {
         File[] files = directory.listFiles();
         if (files != null) {
-            for (File f : files) {
-                f.delete();
+            for (File file : files) {
+                file.delete();
             }
         }
     }

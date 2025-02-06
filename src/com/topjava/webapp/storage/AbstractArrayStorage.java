@@ -7,26 +7,26 @@ import java.util.*;
 import java.util.logging.Logger;
 
 public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
-    protected static final int ARRAY_LENGTH = 10000;
-    protected Resume[] storage = new Resume[ARRAY_LENGTH];
+    protected static final int STORAGE_LIMIT = 10000;
+    protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size;
 
     private static final Logger LOG2 = Logger.getLogger(AbstractArrayStorage.class.getName());
 
     @Override
     public void doSave(Resume r, Integer index) {
-        if (size == ARRAY_LENGTH) {
-            LOG2.warning("Storage overflow in doSave func "+ r);
-            throw new StorageException("Storage overflow", r.getUuid());
+        if (size == STORAGE_LIMIT) {
+            LOG2.warning("Overflow storage in doSave " + r);
+            throw new StorageException("Overflow storage", r.getUuid());
         } else {
-            insertElement(r, (Integer) index);
+            insertElement(r, index);
             size++;
         }
     }
 
     @Override
     public void doDelete(Integer index) {
-        fillDeleteElement( index);
+        fillDeleteElement(index);
         storage[size - 1] = null;
         size--;
     }

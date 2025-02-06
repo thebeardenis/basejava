@@ -1,12 +1,11 @@
 package com.topjava.webapp.storage;
 
 import com.topjava.webapp.model.Resume;
-import org.junit.Before;
 
-public class ResumeTestDate {
-    private final Resume resume = new Resume("Uuid_1", "Full_name_1");
+public class ResumeTestDate{
+    private final Resume resume;
 
-    @Before
-    public void setUp() {
+    public ResumeTestDate(Resume resume, String uuid, String fullName) {
+        this.resume = new Resume(uuid, fullName);
     }
 }

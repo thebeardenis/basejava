@@ -4,7 +4,6 @@ import com.topjava.webapp.exception.ExistStorageException;
 import com.topjava.webapp.exception.NotExistStorageException;
 import com.topjava.webapp.model.Resume;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Logger;
@@ -27,7 +26,6 @@ public abstract class AbstractStorage<SK> implements Storage {
     protected abstract List<Resume> doCopyAll();
 
     public void update(Resume r) {
-//        LOG.info("Update" + r);
         SK searchKey = getExistedSearchKey(r.getFullName());
         doUpdate(r, searchKey);
     }
@@ -72,7 +70,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     public List<Resume> getAllSorted() {
 //        LOG.info("Get All Sorted");
         List<Resume> list = doCopyAll();
-        Collections.sort(list, Comparator.comparing(Resume::getFullName));
+        list.sort(Comparator.comparing(Resume::getFullName));
         return list;
     }
 }
