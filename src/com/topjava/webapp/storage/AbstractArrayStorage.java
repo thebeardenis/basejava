@@ -4,15 +4,19 @@ import com.topjava.webapp.exception.StorageException;
 import com.topjava.webapp.model.Resume;
 
 import java.util.*;
+import java.util.logging.Logger;
 
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     protected static final int ARRAY_LENGTH = 10000;
     protected Resume[] storage = new Resume[ARRAY_LENGTH];
     protected int size;
 
+    private static final Logger LOG2 = Logger.getLogger(AbstractArrayStorage.class.getName());
+
     @Override
-    public void doSave(Resume r, Object index) {
+    public void doSave(Resume r, Integer index) {
         if (size == ARRAY_LENGTH) {
+            LOG2.warning("Storage overflow in doSave func "+ r);
             throw new StorageException("Storage overflow", r.getUuid());
         } else {
             insertElement(r, (Integer) index);
@@ -21,8 +25,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public void doDelete(Object index) {
-        fillDeleteElement((Integer) index);
+    public void doDelete(Integer index) {
+        fillDeleteElement( index);
         storage[size - 1] = null;
         size--;
     }
@@ -32,12 +36,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public void doUpdate(Resume r, Object index) {
-        storage[(Integer) index] = r;
+    public void doUpdate(Resume r, Integer index) {
+        storage[index] = r;
     }
 
-    public Resume doGet(Object index) {
-        return storage[(Integer) index];
+    public Resume doGet(Integer index) {
+        return storage[index];
     }
 
     public void clear() {
@@ -51,8 +55,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(Object index) {
-        return (Integer) index >= 0;
+    protected boolean isExist(Integer index) {
+        return index >= 0;
     }
 
     protected abstract void fillDeleteElement(int index);

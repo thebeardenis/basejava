@@ -7,54 +7,62 @@ import com.topjava.webapp.model.Resume;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Logger;
 
-public abstract class AbstractStorage implements Storage {
+public abstract class AbstractStorage<SK> implements Storage {
+    private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
 
-    protected abstract Object getSearchKey(String fullName);
+    protected abstract SK getSearchKey(String fullName);
 
-    protected abstract void doUpdate(Resume r, Object searchKey);
+    protected abstract void doUpdate(Resume r, SK searchKey);
 
-    protected abstract boolean isExist(Object searchKey);
+    protected abstract boolean isExist(SK searchKey);
 
-    protected abstract void doSave(Resume r, Object searchKey);
+    protected abstract void doSave(Resume r, SK searchKey);
 
-    protected abstract Resume doGet(Object searchKey);
+    protected abstract Resume doGet(SK searchKey);
 
-    protected abstract void doDelete(Object searchKey);
+    protected abstract void doDelete(SK searchKey);
 
     protected abstract List<Resume> doCopyAll();
 
     public void update(Resume r) {
-        Object searchKey = getExistedSearchKey(r.getFullName());
+//        LOG.info("Update" + r);
+        SK searchKey = getExistedSearchKey(r.getFullName());
         doUpdate(r, searchKey);
     }
 
     public void save(Resume r) {
-        Object searchKey = getNotExistedSearchKey(r.getFullName());
+//        LOG.info("Save " + r);
+        SK searchKey = getNotExistedSearchKey(r.getFullName());
         doSave(r, searchKey);
     }
 
     public void delete(String fullName) {
-        Object searchKey = getExistedSearchKey(fullName);
+//        LOG.info("Delete " + fullName);
+        SK searchKey = getExistedSearchKey(fullName);
         doDelete(searchKey);
     }
 
     public Resume get(String fullName) {
-        Object searchKey = getExistedSearchKey(fullName);
+//        LOG.info("Get " + fullName);
+        SK searchKey = getExistedSearchKey(fullName);
         return (Resume) doGet(searchKey);
     }
 
-    private Object getExistedSearchKey(String fullName) {
-        Object searchKey = getSearchKey(fullName);
+    private SK getExistedSearchKey(String fullName) {
+        SK searchKey = getSearchKey(fullName);
         if (!isExist(searchKey)) {
+            LOG.warning("Get key not exist " + fullName);
             throw new NotExistStorageException(fullName);
         }
         return searchKey;
     }
 
-    private Object getNotExistedSearchKey(String fullName) {
-        Object searchKey = getSearchKey(fullName);
+    private SK getNotExistedSearchKey(String fullName) {
+        SK searchKey = getSearchKey(fullName);
         if (isExist(searchKey)) {
+            LOG.warning("Get key already " + fullName);
             throw new ExistStorageException(fullName);
         }
         return searchKey;
@@ -62,6 +70,7 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public List<Resume> getAllSorted() {
+//        LOG.info("Get All Sorted");
         List<Resume> list = doCopyAll();
         Collections.sort(list, Comparator.comparing(Resume::getFullName));
         return list;

@@ -2,11 +2,13 @@ package com.topjava.webapp.storage;
 
 import com.topjava.webapp.exception.ExistStorageException;
 import com.topjava.webapp.exception.NotExistStorageException;
-import com.topjava.webapp.model.Resume;
+import com.topjava.webapp.model.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractStorageTest {
@@ -14,19 +16,47 @@ public abstract class AbstractStorageTest {
 
     private static final String UUID_1 = "uuid1";
     private static final String FULL_NAME_1 = "Aleksei Popov";
-    private static final Resume RESUME_1 = new Resume(UUID_1,FULL_NAME_1);
+    private static final Resume R1 = new Resume(UUID_1,FULL_NAME_1);
 
     private static final String UUID_2 = "uuid2";
     private static final String FULL_NAME_2 = "Denis Smirnov";
-    private static final Resume RESUME_2 = new Resume(UUID_2, FULL_NAME_2);
+    private static final Resume R2 = new Resume(UUID_2, FULL_NAME_2);
 
     private static final String UUID_3 = "uuid3";
     private static final String FULL_NAME_3 = "Sergei Fedorov";
-    private static final Resume RESUME_3 = new Resume(UUID_3, FULL_NAME_3);
+    private static final Resume R3 = new Resume(UUID_3, FULL_NAME_3);
 
     private static final String UUID_4 = "uuid4";
     private static final String FULL_NAME_4 = "Kiril Ponomarev";
-    private static final Resume RESUME_4 = new Resume(UUID_4, FULL_NAME_4);
+    private static final Resume R4 = new Resume(UUID_4, FULL_NAME_4);
+
+    static {
+        List<AboutOrganization.Position> POS1 = new ArrayList<>();
+        POS1.add(new AboutOrganization.Position(2005, Month.DECEMBER, 2010, Month.MAY, "position backend gamedev", "create game solo"));
+        POS1.add(new AboutOrganization.Position(2001, Month.JANUARY, 2002, Month.DECEMBER, "position2", "content2"));
+        List<AboutOrganization.Position> POS2 = new ArrayList<>();
+        POS2.add(new AboutOrganization.Position(2014, Month.DECEMBER, 2010, Month.MAY,"Primary school", null));
+        POS2.add(new AboutOrganization.Position(2018, Month.SEPTEMBER, 2025, Month.MAY, "High school", "big student"));
+        List<AboutOrganization.Position> POS3 = new ArrayList<>();
+        POS3.add(new AboutOrganization.Position(2005, Month.DECEMBER, "All time development", "to now time"));
+        R1.addContact(ContactsType.MAIL, "denis_2000_kolesnik@mail.ru");
+        R1.addContact(ContactsType.PHONE, "+79662108956");
+        R1.addSection(SectionType.PERSONAL, new TextSection("Personal section 1"));
+        R1.addSection(SectionType.OBJECTIVE, new TextSection("Objective 1"));
+        R1.addSection(SectionType.ACHIEVEMENT, new ListSections("Achievement is big tech skills dev", "school boy"));
+        R1.addSection(SectionType.QUALIFICATIONS, new ListSections("Winner big olympics", "Have gold medal with school"));
+        R1.addSection(SectionType.EXPERIENCE,
+                new AboutOrganizationSection(
+                        new AboutOrganization("Organization 1", "https://thebeardenis.git.io", POS1)));
+        R1.addSection(SectionType.EDUCATION,
+                new AboutOrganizationSection(
+                        new AboutOrganization("School number 15",  "https://school15.ru", POS2)));
+        R2.addContact(ContactsType.MAIL, "main.ru");
+        R2.addContact(ContactsType.GITHUB, "github.thebeardenis.com");
+        R2.addSection(SectionType.EXPERIENCE,
+                new AboutOrganizationSection(
+                        new AboutOrganization("Organization 14","https://youtube.com", POS3)));
+    }
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -35,21 +65,21 @@ public abstract class AbstractStorageTest {
     @Before
     public void setUp() throws Exception {
         storage.clear();
-        storage.save(RESUME_1);
-        storage.save(RESUME_2);
-        storage.save(RESUME_3);
+        storage.save(R1);
+        storage.save(R2);
+        storage.save(R3);
     }
 
     @Test
     public void save() throws Exception {
-        storage.save(RESUME_4);
+        storage.save(R4);
         assertSize(4);
-        assertGet(RESUME_4);
+        assertGet(R4);
     }
 
     @Test(expected = ExistStorageException.class)
     public void saveExist() throws Exception {
-        storage.save(RESUME_1);
+        storage.save(R1);
     }
 
     @Test
@@ -71,7 +101,7 @@ public abstract class AbstractStorageTest {
     @Test
     public void update() throws Exception {
         storage.update(new Resume(UUID_3, FULL_NAME_3));
-        assertGet(RESUME_3);
+        assertGet(R3);
         assertSize(3);
     }
 
@@ -82,9 +112,9 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void get() throws Exception {
-        assertGet(RESUME_1);
-        assertGet(RESUME_2);
-        assertGet(RESUME_3);
+        assertGet(R1);
+        assertGet(R2);
+        assertGet(R3);
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -101,9 +131,9 @@ public abstract class AbstractStorageTest {
     @Test
     public void getAllSorted() throws Exception {
         List<Resume> second = storage.getAllSorted();
-        Assert.assertEquals(RESUME_1, second.get(0));
-        Assert.assertEquals(RESUME_2, second.get(1));
-        Assert.assertEquals(RESUME_3, second.get(2));
+        Assert.assertEquals(R1, second.get(0));
+        Assert.assertEquals(R2, second.get(1));
+        Assert.assertEquals(R3, second.get(2));
         assertSize(3);
     }
 
