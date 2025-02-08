@@ -1,5 +1,7 @@
 package com.topjava.webapp.model;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
@@ -9,7 +11,10 @@ import java.util.Objects;
 import static com.topjava.webapp.util.DateUtil.NOW;
 import static com.topjava.webapp.util.DateUtil.of;
 
-public class AboutOrganization {
+public class AboutOrganization implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private List<Position> directions = new ArrayList<>();
     private final Link linkHomePage;
 
@@ -27,7 +32,10 @@ public class AboutOrganization {
         return "Organization(" + linkHomePage + ", " + directions + ")";
     }
 
-    public static class Position {
+    public static class Position implements Serializable{
+        @Serial
+        private static final long serialVersionUID = 1L;
+
         private final LocalDate startDate;
         private final LocalDate endDate;
         private final String title;

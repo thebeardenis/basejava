@@ -1,8 +1,12 @@
 package com.topjava.webapp.model;
 
+import java.io.Serial;
 import java.util.Objects;
 
 public class TextSection extends Sections{
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private final String textContent;
 
     public TextSection(String textContent) {

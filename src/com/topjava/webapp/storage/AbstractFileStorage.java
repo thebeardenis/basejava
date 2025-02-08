@@ -3,8 +3,7 @@ package com.topjava.webapp.storage;
 import com.topjava.webapp.exception.StorageException;
 import com.topjava.webapp.model.Resume;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,10 +12,10 @@ public abstract class AbstractFileStorage extends AbstractStorage<File>{
     private final File directory;
     protected AbstractFileStorage(File directory) {
         Objects.requireNonNull(directory, "Directory must not be null.");
-        if (directory.isDirectory()) {
+        if (!directory.isDirectory()) {
             throw new IllegalArgumentException(directory.getAbsolutePath()+" is not directory.");
         }
-        if (directory.canRead() || directory.canWrite()) {
+        if (!directory.canRead() || !directory.canWrite()) {
             throw new IllegalArgumentException(directory.getAbsolutePath()+" is not writable/readable");
         }
         this.directory = directory;
@@ -28,9 +27,9 @@ public abstract class AbstractFileStorage extends AbstractStorage<File>{
     }
 
     @Override
-    protected void doUpdate(Resume r, File searchKey) {
+    protected void doUpdate(Resume r, File file) {
         try {
-            doWrite(r, searchKey);
+            doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("File update error", r.getUuid(), e);
         }
@@ -45,20 +44,20 @@ public abstract class AbstractFileStorage extends AbstractStorage<File>{
     protected void doSave(Resume r, File file) {
         try {
             file.createNewFile();
-            doWrite(r, file);
+            doWrite(r, new FileOutputStream(file));
         } catch (IOException e) {
             throw new StorageException("Couldn't create new file "+file.getAbsolutePath(), file.getName(), e);
         }
         doUpdate(r, file);
     }
 
-    protected abstract void doWrite(Resume r, File file) throws IOException;
-    protected abstract Resume doRead(File file) throws IOException;
+    protected abstract void doWrite(Resume r, OutputStream stream) throws IOException;
+    protected abstract Resume doRead(InputStream stream) throws IOException;
 
     @Override
     protected Resume doGet(File file) {
         try {
-            return doRead(file);
+            return doRead(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
             throw new StorageException("File read error" ,file.getName() , e);
         }

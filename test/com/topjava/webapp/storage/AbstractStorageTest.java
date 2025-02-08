@@ -7,11 +7,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractStorageTest {
+    protected static final File STORAGE_DIR = new File("/home/thebear/mygit/basejava/storage");
+
     protected Storage storage;
 
     private static final String UUID_1 = "uuid1";
