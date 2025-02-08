@@ -1,8 +1,6 @@
 package com.topjava.webapp;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
 
 public class MainFile {
     public static void main(String[] args) {
@@ -32,14 +30,16 @@ public class MainFile {
     }
 
     public static void printFiles(File directory) {
-        if (directory.isFile()) {
-            System.out.println("File: " + directory.getAbsolutePath());
-        } else if (directory.isDirectory()) {
-            System.out.println("Directory: " + directory.getAbsolutePath());
-            File[] allFiles = directory.listFiles();
-            List<File> lstFile = Arrays.asList(allFiles);
-            for (File fileInDir : lstFile) {
-                printFiles(fileInDir);
+        File[] allFiles = directory.listFiles();
+        System.out.println("\n Directory: "+directory.getAbsolutePath()+"\n In directory:");
+        if (allFiles != null) {
+            for (File fileInDir : allFiles) {
+                if (fileInDir.isDirectory()) {
+                    System.out.println("D: "+fileInDir.getAbsolutePath());
+                    printFiles(fileInDir);
+                } else if (fileInDir.isFile()) {
+                    System.out.println("F: " + directory.getAbsolutePath());
+                }
             }
         }
     }
