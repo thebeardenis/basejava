@@ -3,6 +3,10 @@ package com.topjava.webapp.storage;
 import com.topjava.webapp.exception.ExistStorageException;
 import com.topjava.webapp.exception.NotExistStorageException;
 import com.topjava.webapp.model.*;
+import com.topjava.webapp.model.sections.AboutOrganization;
+import com.topjava.webapp.model.sections.AboutOrganizationSection;
+import com.topjava.webapp.model.sections.ListSections;
+import com.topjava.webapp.model.sections.TextSection;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -134,9 +138,9 @@ public abstract class AbstractStorageTest {
     @Test
     public void getAllSorted() throws Exception {
         List<Resume> second = storage.getAllSorted();
-        Assert.assertEquals(R1, second.get(0));
-        Assert.assertEquals(R2, second.get(1));
-        Assert.assertEquals(R3, second.get(2));
+        assertGet(R1);
+        assertGet(R2);
+        assertGet(R3);
         assertSize(3);
     }
 

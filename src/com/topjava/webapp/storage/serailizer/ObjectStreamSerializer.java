@@ -5,7 +5,7 @@ import com.topjava.webapp.model.Resume;
 
 import java.io.*;
 
-public class ObjectStreamSerializer implements StreamSerializer{
+public class ObjectStreamSerializer implements StreamSerializer {
 
     @Override
     public void doWrite(Resume r, OutputStream os) throws IOException {
@@ -16,7 +16,7 @@ public class ObjectStreamSerializer implements StreamSerializer{
 
     @Override
     public Resume doRead(InputStream is) throws IOException {
-        try (ObjectInputStream ois = new ObjectInputStream(is)){
+        try (ObjectInputStream ois = new ObjectInputStream(is)) {
             return (Resume) ois.readObject();
         } catch (ClassNotFoundException e) {
             throw new StorageException("Error read resume", null, e);
