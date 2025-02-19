@@ -1,6 +1,6 @@
 package com.topjava.webapp.model.sections;
 
-import com.topjava.webapp.util.LocalDateAdapter;
+import com.topjava.webapp.util.LocalDateXmlAdapter;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -34,6 +34,13 @@ public class AboutOrganization implements Serializable {
         this.linkHomePage = homePage;
     }
 
+    public Link getLinkPage() {
+        return linkHomePage;
+    }
+    public List<Position> getDirections() {
+        return directions;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -54,9 +61,9 @@ public class AboutOrganization implements Serializable {
         @Serial
         private static final long serialVersionUID = 1L;
 
-        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        @XmlJavaTypeAdapter(LocalDateXmlAdapter.class)
         private LocalDate startDate;
-        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        @XmlJavaTypeAdapter(LocalDateXmlAdapter.class)
         private LocalDate endDate;
         private String title;
         private String description;
@@ -76,7 +83,7 @@ public class AboutOrganization implements Serializable {
             this.startDate = startDate;
             this.endDate = endDate;
             this.title = title;
-            this.description = description;
+            this.description = description == null ? "" : description;
         }
 
         public LocalDate getStartDate() {

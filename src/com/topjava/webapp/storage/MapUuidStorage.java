@@ -8,8 +8,8 @@ public class MapUuidStorage extends AbstractStorage<String> {
     private Map<String, Resume> map = new HashMap<>();
 
     @Override
-    protected String getSearchKey(String searchKey) {
-        return searchKey;
+    protected String getSearchKey(String uuid) {
+        return uuid;
     }
 
     @Override

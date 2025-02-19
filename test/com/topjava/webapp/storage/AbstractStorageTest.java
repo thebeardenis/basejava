@@ -1,48 +1,44 @@
 package com.topjava.webapp.storage;
 
+import com.topjava.webapp.Config;
 import com.topjava.webapp.exception.ExistStorageException;
 import com.topjava.webapp.exception.NotExistStorageException;
-import com.topjava.webapp.model.*;
-import com.topjava.webapp.model.sections.AboutOrganization;
-import com.topjava.webapp.model.sections.AboutOrganizationSection;
-import com.topjava.webapp.model.sections.ListSections;
-import com.topjava.webapp.model.sections.TextSection;
+import com.topjava.webapp.model.Resume;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.time.Month;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public abstract class AbstractStorageTest {
-    protected static final File STORAGE_DIR = new File("/home/thebear/mygit/basejava/storage");
+    protected static final File STORAGE_DIR = Config.get().getStorageDir();
 
     protected Storage storage;
 
-    private static final String UUID_1 = "uuid1";
+    private static final String UUID_1 = UUID.randomUUID().toString();
     private static final String FULL_NAME_1 = "Aleksei Popov";
     private static final Resume R1 = new Resume(UUID_1,FULL_NAME_1);
 
-    private static final String UUID_2 = "uuid2";
+    private static final String UUID_2 = UUID.randomUUID().toString();
     private static final String FULL_NAME_2 = "Denis Smirnov";
     private static final Resume R2 = new Resume(UUID_2, FULL_NAME_2);
 
-    private static final String UUID_3 = "uuid3";
+    private static final String UUID_3 = UUID.randomUUID().toString();
     private static final String FULL_NAME_3 = "Sergei Fedorov";
     private static final Resume R3 = new Resume(UUID_3, FULL_NAME_3);
 
-    private static final String UUID_4 = "uuid4";
+    private static final String UUID_4 = UUID.randomUUID().toString();
     private static final String FULL_NAME_4 = "Kiril Ponomarev";
     private static final Resume R4 = new Resume(UUID_4, FULL_NAME_4);
-
+/*
     static {
         List<AboutOrganization.Position> POS1 = new ArrayList<>();
         POS1.add(new AboutOrganization.Position(2005, Month.DECEMBER, 2010, Month.MAY, "position backend gamedev", "create game solo"));
         POS1.add(new AboutOrganization.Position(2001, Month.JANUARY, 2002, Month.DECEMBER, "position2", "content2"));
         List<AboutOrganization.Position> POS2 = new ArrayList<>();
-        POS2.add(new AboutOrganization.Position(2014, Month.DECEMBER, 2010, Month.MAY,"Primary school", null));
+        POS2.add(new AboutOrganization.Position(2014, Month.DECEMBER, 2010, Month.MAY,"Primary school", "PapaRimski"));
         POS2.add(new AboutOrganization.Position(2018, Month.SEPTEMBER, 2025, Month.MAY, "High school", "big student"));
         List<AboutOrganization.Position> POS3 = new ArrayList<>();
         POS3.add(new AboutOrganization.Position(2005, Month.DECEMBER, "All time development", "to now time"));
@@ -64,7 +60,7 @@ public abstract class AbstractStorageTest {
                 new AboutOrganizationSection(
                         new AboutOrganization("Organization 14","https://youtube.com", POS3)));
     }
-
+*/
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
     }
@@ -91,7 +87,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void delete() throws Exception {
-        storage.delete(FULL_NAME_1);
+        storage.delete(UUID_1);
         assertSize(2);
     }
 
@@ -149,7 +145,7 @@ public abstract class AbstractStorageTest {
     }
 
     private void assertGet(Resume r) {
-        Assert.assertEquals(r, storage.get(r.getFullName()));
+        Assert.assertEquals(r, storage.get(r.getUuid()));
     }
 
 }

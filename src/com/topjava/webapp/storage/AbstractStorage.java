@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public abstract class AbstractStorage<SK> implements Storage {
     private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
 
-    protected abstract SK getSearchKey(String fullName);
+    protected abstract SK getSearchKey(String uuid);
 
     protected abstract void doUpdate(Resume r, SK searchKey);
 
@@ -26,25 +26,25 @@ public abstract class AbstractStorage<SK> implements Storage {
     protected abstract List<Resume> doCopyAll();
 
     public void update(Resume r) {
-        SK searchKey = getExistedSearchKey(r.getFullName());
+        SK searchKey = getExistedSearchKey(r.getUuid());
         doUpdate(r, searchKey);
     }
 
     public void save(Resume r) {
 //        LOG.info("Save " + r);
-        SK searchKey = getNotExistedSearchKey(r.getFullName());
+        SK searchKey = getNotExistedSearchKey(r.getUuid());
         doSave(r, searchKey);
     }
 
-    public void delete(String fullName) {
+    public void delete(String uuid) {
 //        LOG.info("Delete " + fullName);
-        SK searchKey = getExistedSearchKey(fullName);
+        SK searchKey = getExistedSearchKey(uuid);
         doDelete(searchKey);
     }
 
-    public Resume get(String fullName) {
+    public Resume get(String uuid) {
 //        LOG.info("Get " + fullName);
-        SK searchKey = getExistedSearchKey(fullName);
+        SK searchKey = getExistedSearchKey(uuid);
         return (Resume) doGet(searchKey);
     }
 
@@ -70,7 +70,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     public List<Resume> getAllSorted() {
 //        LOG.info("Get All Sorted");
         List<Resume> list = doCopyAll();
-        list.sort(Comparator.comparing(Resume::getFullName));
+        list.sort(Comparator.comparing(Resume::getUuid));
         return list;
     }
 }

@@ -8,9 +8,9 @@ public interface Storage {
 
     void update(Resume r);
 
-    Resume get(String fullName);
+    Resume get(String uuid);
 
-    void delete(String fullName);
+    void delete(String uuid);
 
     void clear();
 

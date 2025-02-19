@@ -10,8 +10,8 @@ public class JsonStreamSerializer implements StreamSerializer{
 
     @Override
     public void doWrite(Resume r, OutputStream os) throws IOException {
-        try (Writer w = new OutputStreamWriter(os, StandardCharsets.UTF_8)) {
-            JsonParser.write(r, w);
+        try (Writer writer = new OutputStreamWriter(os, StandardCharsets.UTF_8)) {
+            JsonParser.write(r, writer);
         }
     }
 

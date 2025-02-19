@@ -6,10 +6,11 @@ import com.topjava.webapp.model.sections.Sections;
 
 import java.io.Reader;
 import java.io.Writer;
+import java.time.LocalDate;
 
 public class JsonParser {
     private static Gson GSON = new GsonBuilder()
-            .registerTypeAdapter(LocalDateAdapter.class, new LocalDateAdapter())
+            .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
             .registerTypeAdapter(Sections.class, new JsonSectionAdapter())
             .create();
 

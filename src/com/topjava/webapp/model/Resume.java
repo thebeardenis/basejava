@@ -22,6 +22,14 @@ public class Resume implements Comparable<Resume>, Serializable {
     private String uuid;
     private String fullName;
 
+    public Map<SectionType, Sections> getSections() {
+        return sections;
+    }
+
+    public Map<ContactsType, String> getContacts() {
+        return contacts;
+    }
+
     public Resume() {
 
     }
@@ -61,14 +69,6 @@ public class Resume implements Comparable<Resume>, Serializable {
 
     public String getFullName() {
         return fullName;
-    }
-
-    public String getContact(ContactsType type) {
-        return contacts.get(type);
-    }
-
-    public Sections getSection(SectionType type) {
-        return sections.get(type);
     }
 
     public void addContact(ContactsType type, String value) {

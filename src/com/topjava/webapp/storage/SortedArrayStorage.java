@@ -14,7 +14,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         }
     }
  */
-    private static final Comparator<Resume> RESUME_COMPARATOR = Comparator.comparing(Resume::getFullName);
+    private static final Comparator<Resume> RESUME_COMPARATOR = Comparator.comparing(Resume::getUuid);
 
     @Override
     protected void fillDeleteElement(int index) {
@@ -31,8 +31,8 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         storage[binaryIndex] = r;
     }
 
-    protected Integer getSearchKey(String fullName) {
-        Resume searchKey = new Resume(fullName);
+    protected Integer getSearchKey(String uuid) {
+        Resume searchKey = new Resume(uuid, "dummy");
         return Arrays.binarySearch(storage, 0, size, searchKey,RESUME_COMPARATOR);
     }
 }
