@@ -3,12 +3,16 @@ package com.topjava.webapp.storage;
 import com.topjava.webapp.Config;
 import com.topjava.webapp.exception.ExistStorageException;
 import com.topjava.webapp.exception.NotExistStorageException;
+import com.topjava.webapp.model.ContactsType;
 import com.topjava.webapp.model.Resume;
+import com.topjava.webapp.model.sections.AboutOrganization;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,7 +36,7 @@ public abstract class AbstractStorageTest {
     private static final String UUID_4 = UUID.randomUUID().toString();
     private static final String FULL_NAME_4 = "Kiril Ponomarev";
     private static final Resume R4 = new Resume(UUID_4, FULL_NAME_4);
-/*
+
     static {
         List<AboutOrganization.Position> POS1 = new ArrayList<>();
         POS1.add(new AboutOrganization.Position(2005, Month.DECEMBER, 2010, Month.MAY, "position backend gamedev", "create game solo"));
@@ -44,7 +48,9 @@ public abstract class AbstractStorageTest {
         POS3.add(new AboutOrganization.Position(2005, Month.DECEMBER, "All time development", "to now time"));
         R1.addContact(ContactsType.MAIL, "denis_2000_kolesnik@mail.ru");
         R1.addContact(ContactsType.PHONE, "+79662108956");
-        R1.addSection(SectionType.PERSONAL, new TextSection("Personal section 1"));
+        R2.addContact(ContactsType.MAIL, "main.ru");
+        R2.addContact(ContactsType.GITHUB, "github.thebeardenis.com");
+/*       R1.addSection(SectionType.PERSONAL, new TextSection("Personal section 1"));
         R1.addSection(SectionType.OBJECTIVE, new TextSection("Objective 1"));
         R1.addSection(SectionType.ACHIEVEMENT, new ListSections("Achievement is big tech skills dev", "school boy"));
         R1.addSection(SectionType.QUALIFICATIONS, new ListSections("Winner big olympics", "Have gold medal with school"));
@@ -54,13 +60,12 @@ public abstract class AbstractStorageTest {
         R1.addSection(SectionType.EDUCATION,
                 new AboutOrganizationSection(
                         new AboutOrganization("School number 15",  "https://school15.ru", POS2)));
-        R2.addContact(ContactsType.MAIL, "main.ru");
-        R2.addContact(ContactsType.GITHUB, "github.thebeardenis.com");
         R2.addSection(SectionType.EXPERIENCE,
                 new AboutOrganizationSection(
                         new AboutOrganization("Organization 14","https://youtube.com", POS3)));
+ */
     }
-*/
+
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
     }
