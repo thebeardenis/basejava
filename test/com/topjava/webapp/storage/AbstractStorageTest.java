@@ -5,14 +5,11 @@ import com.topjava.webapp.exception.ExistStorageException;
 import com.topjava.webapp.exception.NotExistStorageException;
 import com.topjava.webapp.model.ContactsType;
 import com.topjava.webapp.model.Resume;
-import com.topjava.webapp.model.sections.AboutOrganization;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.time.Month;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,7 +35,11 @@ public abstract class AbstractStorageTest {
     private static final Resume R4 = new Resume(UUID_4, FULL_NAME_4);
 
     static {
-        List<AboutOrganization.Position> POS1 = new ArrayList<>();
+        R1.addContact(ContactsType.MAIL, "denis_2000_kolesnik");
+        R1.addContact(ContactsType.PHONE, "+79662108956");
+        R4.addContact(ContactsType.MAIL, "best_main_in_world");
+        R4.addContact(ContactsType.GITHUB, "github.thebeardenis.com");
+/*        List<AboutOrganization.Position> POS1 = new ArrayList<>();
         POS1.add(new AboutOrganization.Position(2005, Month.DECEMBER, 2010, Month.MAY, "position backend gamedev", "create game solo"));
         POS1.add(new AboutOrganization.Position(2001, Month.JANUARY, 2002, Month.DECEMBER, "position2", "content2"));
         List<AboutOrganization.Position> POS2 = new ArrayList<>();
@@ -46,11 +47,7 @@ public abstract class AbstractStorageTest {
         POS2.add(new AboutOrganization.Position(2018, Month.SEPTEMBER, 2025, Month.MAY, "High school", "big student"));
         List<AboutOrganization.Position> POS3 = new ArrayList<>();
         POS3.add(new AboutOrganization.Position(2005, Month.DECEMBER, "All time development", "to now time"));
-        R1.addContact(ContactsType.MAIL, "denis_2000_kolesnik@mail.ru");
-        R1.addContact(ContactsType.PHONE, "+79662108956");
-        R2.addContact(ContactsType.MAIL, "main.ru");
-        R2.addContact(ContactsType.GITHUB, "github.thebeardenis.com");
-/*       R1.addSection(SectionType.PERSONAL, new TextSection("Personal section 1"));
+        R1.addSection(SectionType.PERSONAL, new TextSection("Personal section 1"));
         R1.addSection(SectionType.OBJECTIVE, new TextSection("Objective 1"));
         R1.addSection(SectionType.ACHIEVEMENT, new ListSections("Achievement is big tech skills dev", "school boy"));
         R1.addSection(SectionType.QUALIFICATIONS, new ListSections("Winner big olympics", "Have gold medal with school"));
@@ -108,8 +105,12 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() throws Exception {
-        storage.update(new Resume(UUID_3, FULL_NAME_3));
-        assertGet(R3);
+        Resume resume = new Resume(UUID_1, "New name");
+        R1.addContact(ContactsType.MAIL, "mail@google.com");
+        R1.addContact(ContactsType.MAIL, "new_mail");
+        R1.addContact(ContactsType.GITHUB, "new_git_hub");
+        storage.update(resume);
+        Assert.assertEquals(resume, storage.get(UUID_1));
         assertSize(3);
     }
 
