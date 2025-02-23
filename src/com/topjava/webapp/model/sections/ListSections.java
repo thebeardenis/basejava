@@ -13,8 +13,8 @@ public class ListSections extends Sections {
 
     public ListSections() {
     }
-    public ListSections(List<String> items) {
-        Objects.requireNonNull(items, "List sections can't don't have no items.");
+    public ListSections(List<String> items)     {
+        Objects.requireNonNull(items, "List sections can't don't have items.");
         this.items = items;
     }
     public ListSections(String... items) {

@@ -35,7 +35,7 @@ public class Config {
         return storageDir;
     }
 
-    public Storage getStorage() {
-        return storage;
+    public SqlStorage getStorage() {
+        return (SqlStorage) storage;
     }
 }

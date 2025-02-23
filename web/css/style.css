@@ -1,0 +1,13 @@
+header {
+    background: none repeat scroll 0 0 purple;
+    color: greenyellow;
+    font-size: 20px;
+    padding: 5px 20px;
+}
+
+footer {
+    background: none repeat scroll 0 0 goldenrod;
+    color: brown;
+    font-size: 20px;
+    margin: 20px 0px;
+}
